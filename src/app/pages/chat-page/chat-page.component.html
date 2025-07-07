@@ -1,0 +1,11 @@
+<div>
+    <h1>Mystery Chat</h1>
+    <div>
+        <input {(ngModel)}="userText" placeholder="Enter Message">
+        <button (click)="newMessage">Send</button>
+
+        @for(message of messages; track message) {
+            <li>{{ message.text }}</li>
+        }
+    </div>
+</div>

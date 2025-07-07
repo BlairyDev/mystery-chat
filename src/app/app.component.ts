@@ -1,8 +1,15 @@
 import { Component, OnDestroy } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { SocketService } from './socket.service';
+import { SocketService } from './services/socket/socket.service';
 import { FormsModule } from '@angular/forms';
+
+type Message = {
+  user: string,
+  text: string,
+  date: number
+}
+
 
 @Component({
   selector: 'app-root',
@@ -11,29 +18,11 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './app.component.css'
 })
 export class AppComponent {
+
   title = 'mystery-chat';
-  private messageSubscription: Subscription;
-  messages: string[] = [];
-  newMessage: string = '';
-
-  constructor(private socketService: SocketService) {
-    this.messageSubscription = this.socketService
-      .on("message")
-      .subscribe((data) => {
-        this.messages.push(data.text);
-      });
-
-  }
-
-  sendMessage() {
-    this.socketService.emit("message", { text: this.newMessage });
-    this.newMessage = "";
-  }
-
-  ngOnDestroy() {
-    this.messageSubscription.unsubscribe();
-  }
-
+  
+  userName: string = ""
+  password: string = ""
 
 
 
